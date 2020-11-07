@@ -1,0 +1,31 @@
+.container {
+  margin-left: 15px;
+  max-width: 50%;
+}
+
+.newsList a {
+  text-transform: capitalize;
+}
+
+.pagination {
+  margin: 15px auto;
+  display: flex;
+  list-style: none;
+  outline: none;
+  justify-content: center;
+}
+.pagination > .active > a {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: #fff;
+}
+.pagination > li > a {
+  /* border: 1px solid #47ccde; */
+  padding: 5px 10px;
+  outline: none;
+  cursor: pointer;
+}
+.pagination > li > a,
+.pagination > li > span {
+  color: #1890ff;
+}
