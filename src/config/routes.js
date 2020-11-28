@@ -27,6 +27,11 @@ const routes = [
     isPublic: true,
   },
   {
+    path: '/infoCorona/:newsId',
+    component: InfoCorona,
+    isPublic: true,
+  },
+  {
     path: '/infoCorona',
     component: InfoCorona,
     isPublic: true,

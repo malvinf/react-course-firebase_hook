@@ -1,4 +1,8 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
+/* eslint-disable eqeqeq */
 import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import { Timeline } from 'antd';
 import ReactPaginate from 'react-paginate';
@@ -9,10 +13,10 @@ import './style.css';
 import 'antd/dist/antd.css';
 
 const CoronaNews = () => {
+  const { newsId } = useParams();
   const [news, setNews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const page = 2;
+  const page = 5;
   const pageCount = Math.ceil(news.length / page);
   const [offset, setOffset] = useState(0);
   const newsSlice = news.slice(offset, offset + page);
@@ -20,16 +24,23 @@ const CoronaNews = () => {
     const { selected } = e;
     setOffset(Math.ceil(selected * page));
   };
-
   useEffect(() => {
     setIsLoading(true);
     const db = app.database().ref('news');
     db.on('value', (snapshot) => {
       const firebaseNews = snapshot.val();
-      setNews(firebaseNews.data);
+      setNews(
+        firebaseNews.data.filter((f) => {
+          if (newsId != null) {
+            if (f.id == newsId) return f;
+          } else {
+            return f;
+          }
+        })
+      );
       setIsLoading(false);
     });
-  }, []);
+  }, [offset, newsId]);
 
   return (
     <div className="container">
@@ -44,7 +55,9 @@ const CoronaNews = () => {
             {newsSlice.map((data) => {
               return (
                 <Timeline.Item key={data.id}>
-                  {data.date.split('T')[0]}
+                  <Link to={`/infoCorona/${data.id}`}>
+                    {data.date.split('T')[0]}
+                  </Link>
                   <ul>
                     {data.activity.map((dataActivity, i) => {
                       return (
@@ -69,7 +82,7 @@ const CoronaNews = () => {
           <ReactPaginate
             previousLabel="👈"
             nextLabel="👉"
-            breakLabel="..."
+            breakLabel=". . ."
             breakClassName="break-me"
             pageCount={pageCount}
             marginPagesDisplayed={2}
