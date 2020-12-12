@@ -1,28 +1,22 @@
 import {
   Home,
-  Profile,
-  Contact,
   Login,
-  ProfileId,
   InfoCorona,
   DetailDate,
+  Product,
+  ProductDetail,
 } from '../pages';
 
 const routes = [
   {
-    path: '/profile/:profileId',
-    component: ProfileId,
+    path: '/product/:productId',
+    component: ProductDetail,
     isPublic: false,
   },
   {
-    path: '/profile',
-    component: Profile,
+    path: '/product',
+    component: Product,
     isPublic: false,
-  },
-  {
-    path: '/contact',
-    component: Contact,
-    isPublic: true,
   },
   {
     path: '/home',
@@ -35,12 +29,12 @@ const routes = [
     isPublic: true,
   },
   {
-    path: '/infoCorona/:dateId',
+    path: '/covid/:dateId',
     component: DetailDate,
     isPublic: true,
   },
   {
-    path: '/infoCorona',
+    path: '/covid',
     component: InfoCorona,
     isPublic: true,
   },

@@ -1,3 +1,9 @@
 export default {
-  LOGIN: '/auth/login',
+  LOGIN: '/login',
+  PRODUCT: (limit, offset, search) => {
+    return `/product?limit=${limit}&offset=${offset}&search=${search}`;
+  },
+  PRODUCTID: (id) => {
+    return `/product/${id}`;
+  },
 };

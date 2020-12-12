@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { setCookie } from '../../utils/cookie';
 import { auth } from '../../services';
+import './style.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -13,8 +14,8 @@ const Login = () => {
     auth
       .login(username, password)
       .then((res) => {
-        const cookieToken = res.data.token;
-        const cookieUser = res.data.user;
+        const cookieToken = res.token;
+        const cookieUser = res.username;
         setCookie('userData', JSON.stringify(cookieUser), 10000);
         setCookie('token', JSON.stringify(cookieToken), 10000);
       })
@@ -22,57 +23,48 @@ const Login = () => {
         console.log(err);
       })
       .finally(() => {
-        setLoginLoading(false);
+        window.location.replace('/product');
       });
   };
 
   return (
-    <div className="loginPage">
-      <h2> Login Page</h2>
-      <form
-        className="login_form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          onSubmitLogin();
-        }}
-      >
-        <label htmlFor="username">
-          Username :
+    <div className="container container-login">
+      <div className="login-card">
+        <h2>Welcome to DTI</h2>
+        <form
+          className="login_form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSubmitLogin();
+          }}
+        >
           <input
+            className="form-control form-control-sm"
             type="text"
+            name="username"
             value={username}
+            placeholder="username"
             onChange={(e) => {
               setUsername(e.target.value);
             }}
           />
-        </label>
-        <label htmlFor="password">
-          Password :
           <input
+            className="form-control form-control-sm"
             type="password"
+            name="password"
             value={password}
+            placeholder="password"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
           />
-        </label>
-        <input type="submit" value="Submit" disabled={isLoginLoading} />
-      </form>
+          <button type="submit" value="Submit" disabled={isLoginLoading}>
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
 
 export default Login;
-
-// Login
-
-// form => post ke server => waiting for response (loading state) =>
-// receive response from server => success -> success statement to user
-//                              => error -> error statement to user  -> next ngapain user?
-
-// if success - get token from be - save Token to cookie -> redirect ??
-
-// Loading state treatment
-// race condition -> unstable connection
-
-// Action A -> Response A  ->  Action B ->  Response B -> success

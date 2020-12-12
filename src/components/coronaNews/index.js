@@ -20,7 +20,7 @@ const NewsPerDate = (props) => {
 
   return (
     <div>
-      <Link to={`/infoCorona/${data.date}`}>
+      <Link to={`/covid/${data.date}`}>
         <h3>{data.date}</h3>
       </Link>
       {data.activity.map((news) => {
